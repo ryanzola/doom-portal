@@ -33,6 +33,7 @@ export default class Experience
         this.setRenderer()
         this.setResources()
         this.setWorld()
+
         
         this.sizes.on('resize', () =>
         {
