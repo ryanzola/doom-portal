@@ -26,19 +26,25 @@ export default class Particles {
     const position = new Float32Array(this.count * 3)
 
     for(let i = 0; i < this.count; i++) {
-      position[i * 3 + 0] = (Math.random() - 0.5) * 5
-      position[i * 3 + 1] = (Math.random() - 0.5) * 5
-      position[i * 3 + 2] = (Math.random() - 0.5) * 5
+      position[i * 3 + 0] = (Math.random() - 0.5) * 2
+      position[i * 3 + 1] = (Math.random() - 0.5) * 2
+      position[i * 3 + 2] = (Math.random() - 0.5) * 2
     }
 
     this.geometry = new THREE.BufferGeometry()
     this.geometry.setAttribute('position', new THREE.BufferAttribute(position, 3))
+    this.geometry.setAttribute('aFboUv', this.flowField.fboUv.attribute)
+
+    console.log(this.geometry)
   }
 
   setMaterial() {
-    this.material = new THREE.PointsMaterial({
-      sizeAttenuation: true,
-      size: 0.1
+    this.material = new THREE.ShaderMaterial({
+      vertexShader: vertex,
+      fragmentShader: fragment,
+      uniforms: {
+        uFBOTexture: { value: this.flowField.texture }
+      }
     })
   }
 
@@ -49,7 +55,7 @@ export default class Particles {
   }
 
   update() {
-    if(this.flowField)
-      this.flowField.update()
+    this.flowField.update()
+    this.material.uniforms.uFBOTexture.value = this.flowField.texture
   }
 }
