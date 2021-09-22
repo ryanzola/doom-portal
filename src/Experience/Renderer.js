@@ -14,6 +14,13 @@ export default class Renderer
         this.sizes = this.experience.sizes
         this.scene = this.experience.scene
         this.camera = this.experience.camera
+
+        if(this.debug)
+        {
+            this.debugFolder = this.debug.addFolder({
+                title: 'renderer'
+            })
+        }
         
         this.usePostprocess = false
 
@@ -23,7 +30,17 @@ export default class Renderer
 
     setInstance()
     {
-        this.clearColor = '#010101'
+        this.clearColor = '#160f11'
+
+        if(this.debug) {
+            this.debugFolder.addInput(
+                this,
+                'clearColor'
+            )
+            .on('change', () => {
+                this.instance.setClearColor( this.clearColor)
+            })
+        }
 
         // Renderer
         this.instance = new THREE.WebGLRenderer({

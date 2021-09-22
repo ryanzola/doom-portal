@@ -1,14 +1,21 @@
-attribute vec2 aFboUv;
-
 uniform sampler2D uFBOTexture;
+uniform sampler2D uMaskTexture;
+uniform float uSize;
 
-void main() {
-  vec4 fboColor = texture2D(uFBOTexture, aFboUv);
+attribute vec2 aFboUv;
+attribute float aSize;
 
-  vec4 modelPosition = modelMatrix * vec4(fboColor.xyz, 1.0);
-  vec4 viewPosition = viewMatrix * modelPosition;
-  gl_Position = projectionMatrix * viewPosition;
+void main()
+{
+    vec4 fboColor = texture2D(uFBOTexture, aFboUv);
 
-  gl_PointSize = 10.0;
-  gl_PointSize *= 1.0 / - viewPosition.z;
+    vec4 modelPosition = modelMatrix * vec4(fboColor.xyz, 1.0);
+    vec4 viewPosition = viewMatrix * modelPosition;
+    gl_Position = projectionMatrix * viewPosition;
+
+    float lifeSize = min((1.0 - fboColor.a) * 10.0, fboColor.a * 2.0);
+    lifeSize = clamp(lifeSize, 0.0, 1.0);
+
+    gl_PointSize = uSize * lifeSize * aSize * 2.0;
+    gl_PointSize *= (1.0 / - viewPosition.z);
 }
