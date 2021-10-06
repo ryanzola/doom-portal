@@ -1,9 +1,9 @@
 import * as THREE from 'three'
 
-import vertex from '../shaders/portalHalo/vertex.glsl'
-import fragment from '../shaders/portalHalo/fragment.glsl'
+import vertex from '../shaders/portalEventHorizon/vertex.glsl'
+import fragment from '../shaders/portalEventHorizon/fragment.glsl'
 
-export default class Halo {
+export default class EventHorizon {
   constructor(_options) {
     this.experience = window.experience
     this.debug = this.experience.debug
@@ -14,9 +14,11 @@ export default class Halo {
     if(this.debug)
     {
       this.debugFolder = this.debug.addFolder({
-        title: 'halo'
+        title: 'event horizon'
       })
     }
+
+    console.log('what')
 
     this.setColors()
     this.setGeometry()
@@ -27,48 +29,37 @@ export default class Halo {
   setColors() {
     this.colors = {}
 
-    this.colors.a = {}
-    this.colors.a.value = '#130000'
-    this.colors.a.instance = new THREE.Color(this.colors.a.value)
+    this.colors.start = {}
+    this.colors.start.value = '#ff3e00'
+    this.colors.start.instance = new THREE.Color(this.colors.start.value)
 
-    this.colors.b = {}
-    this.colors.b.value = '#ff3e00'
-    this.colors.b.instance = new THREE.Color(this.colors.b.value)
-
-    this.colors.c = {}
-    this.colors.c.value = '#ff791e'
-    this.colors.c.instance = new THREE.Color(this.colors.c.value)
+    this.colors.end = {}
+    this.colors.end.value = '#ffda79'
+    this.colors.end.instance = new THREE.Color(this.colors.end.value)
 
     if(this.debug) {
       this.debugFolder.addInput(
-        this.colors.a,
+        this.colors.start,
         'value'
       )
       .on('change', () => {
-        this.colors.a.instance.set(this.colors.a.value)
+        this.colors.start.instance.set(this.colors.start.value)
       })
 
       this.debugFolder.addInput(
-        this.colors.b,
+        this.colors.end,
         'value'
       )
       .on('change', () => {
-        this.colors.b.instance.set(this.colors.b.value)
-      })
-
-      this.debugFolder.addInput(
-        this.colors.c,
-        'value'
-      )
-      .on('change', () => {
-        this.colors.c.instance.set(this.colors.c.value)
+        this.colors.end.instance.set(this.colors.end.value)
       })
     }
   }
 
-  setGeometry() {
-    this.geometry = new THREE.PlaneGeometry(3, 3 , 1, 1)
-  } 
+  setGeometry()
+  {
+      this.geometry = new THREE.PlaneGeometry(3, 3, 1, 1)
+  }
 
   setMaterial() {
     this.material = new THREE.ShaderMaterial({
@@ -80,9 +71,8 @@ export default class Halo {
       fragmentShader: fragment,
       uniforms: {
         uTime: { value: 0 },
-        uColorA: { value: this.colors.a.instance },
-        uColorB: { value: this.colors.b.instance },
-        uColorC: { value: this.colors.c.instance }
+        uColorStart: { value: this.colors.start.instance },
+        uColorEnd: { value: this.colors.end.instance }
       }
     })
   }

@@ -109,10 +109,10 @@ export default class FlowField {
         uBaseTexture: { value: this.baseTexture },
         uTexture: { value: this.baseTexture },
 
-        uDecaySpeed: { value: 0.00141 },
+        uDecaySpeed: { value: 0.00082 },
 
-        uPerlinFrequency: { value: 2.5 },
-        uPerlinMultiplier: { value: 0.014 },
+        uPerlinFrequency: { value: 4 },
+        uPerlinMultiplier: { value: 0.004 },
         uTimeFrequency: { value: 0.0004 }
       }
     })
@@ -167,7 +167,7 @@ export default class FlowField {
       this.debugFolder.addInput(
         this.debugPlane.mesh,
         'visible',
-        { labe: 'debugPlaneVisible' }
+        { label: 'debugPlaneVisible' }
       )
     }
   }
