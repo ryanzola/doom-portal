@@ -20,7 +20,7 @@ export default class Particles {
       })
     }
 
-    this.count = 2000
+    this.count = 5000
 
     this.setPositions()
     this.setFlowField()
@@ -61,7 +61,7 @@ export default class Particles {
 
   setColor() {
     this.color = {}
-    this.color.value = '#ff661e'
+    this.color.value = '#ff521c'
     this.color.instance = new THREE.Color(this.color.value)
 
     if(this.debug) {
@@ -84,7 +84,7 @@ export default class Particles {
       fragmentShader: fragment,
       uniforms: {
         uColor: { value: this.color.instance },
-        uSize: { value: 30 },
+        uSize: { value: 20 },
         uMaskTexture: { value: this.resources.items.particleMaskTexture },
         uFBOTexture: { value: this.flowField.texture }
       }
