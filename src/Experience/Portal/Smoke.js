@@ -1,13 +1,15 @@
 import * as THREE from 'three'
+import Experience from '../Experience'
 
 export default class Smoke {
-  constructor() {
-    this.experience = window.experience
+  constructor(_options) {
+    this.experience = new Experience()
     this.scene = this.experience.scene
     this.time = this.experience.time
     this.config = this.experience.config
-    this.debug = this.experience.debug
     this.resources = this.experience.resources
+    this.colors = _options.colors
+    this.debug = _options.debugFolder
 
     if(this.debug) {
       this.debugFolder = this.debug.addFolder({
@@ -21,33 +23,11 @@ export default class Smoke {
     this.scene.add(this.group)
 
     this.setGeometry()
-    this.setColor()
     this.setItems()
   }
 
   setGeometry() {
     this.geometry = new THREE.PlaneBufferGeometry(1, 1, 1, 1)
-  }
-
-  setColor() {
-    this.color = {}
-
-    // this.color.value = '#1a2036'
-    this.color.value = '#ff4b04'
-    this.color.instance = new THREE.Color(this.color.value)
-
-    if(this.debug) {
-      this.debugFolder.addInput(
-        this.color,
-        'value',
-        {
-          label: 'color'
-        }
-      )
-      .on('change', () => {
-        this.color.instance.set(this.color.value)
-      })
-    }
   }
   
   setItems() {
@@ -64,13 +44,14 @@ export default class Smoke {
         depthWrite: false,
         transparent: true,
         blending: THREE.AdditiveBlending,
+        side: THREE.DoubleSide,
         alphaMap: this.resources.items.smokeTexture,
         opacity: 0.05 + Math.random() * 0.2
         // opacity: 1,
       })
 
 
-      item.material.color = this.color.instance 
+      item.material.color = this.colors.b.instance
 
       // angle
       item.angle = Math.random() * Math.PI * 2

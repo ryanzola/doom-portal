@@ -1,11 +1,12 @@
 import * as THREE from 'three'
+import Experience from '../Experience'
 
 import vertex from '../shaders/flowField/vertex.glsl'
 import fragment from '../shaders/flowField/fragment.glsl'
 
 export default class FlowField {
   constructor(_options) {
-    this.experience = window.experience
+    this.experience = new Experience()
     this.scene = this.experience.scene
     this.renderer = this.experience.renderer
     this.time = this.experience.time
@@ -24,6 +25,7 @@ export default class FlowField {
     this.width = 4096
     this.height = Math.ceil(this.count / this.width)
     this.texture = null
+    this.seed = Math.random() * 1000
 
 
     this.setBaseTexture()
@@ -113,7 +115,9 @@ export default class FlowField {
 
         uPerlinFrequency: { value: 4 },
         uPerlinMultiplier: { value: 0.004 },
-        uTimeFrequency: { value: 0.0004 }
+        uTimeFrequency: { value: 0.0004 },
+
+        uSeed: { value: this.seed }
       }
     })
 
@@ -216,5 +220,22 @@ export default class FlowField {
     this.plane.material.uniforms.uTexture.value = this.renderTargets.secondary.texture
 
     this.render()
+  }
+
+  dispose() {
+    this.baseTexture.dispose()
+    this.renderTargets.a.dispose()
+    this.renderTargets.b.dispose()
+    this.plane.geometry.dispose()
+    this.plane.material.dispose()
+    this.debugPlane.geometry.dispose()
+    this.debugPlane.material.dispose()
+
+    this.scene.remove(this.debugPlane.mesh)
+
+    if(this.debug) {
+      this.debugFolder.dispose()
+    }
+
   }
 }
