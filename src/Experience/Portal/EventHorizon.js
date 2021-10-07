@@ -1,15 +1,16 @@
 import * as THREE from 'three'
-
+import Experience from '../Experience'
 import vertex from '../shaders/portalEventHorizon/vertex.glsl'
 import fragment from '../shaders/portalEventHorizon/fragment.glsl'
 
 export default class EventHorizon {
   constructor(_options) {
-    this.experience = window.experience
-    this.debug = this.experience.debug
+    this.experience = new Experience()
     this.resources = this.experience.resources
     this.scene = this.experience.scene
     this.time = this.experience.time
+    this.colors = _options.colors
+    this.debug = _options.debugFolder
 
     if(this.debug)
     {
@@ -18,43 +19,12 @@ export default class EventHorizon {
       })
     }
 
-    console.log('what')
-
-    this.setColors()
     this.setGeometry()
     this.setMaterial()
     this.setMesh()
   }
 
-  setColors() {
-    this.colors = {}
 
-    this.colors.start = {}
-    this.colors.start.value = '#ff3e00'
-    this.colors.start.instance = new THREE.Color(this.colors.start.value)
-
-    this.colors.end = {}
-    this.colors.end.value = '#ffda79'
-    this.colors.end.instance = new THREE.Color(this.colors.end.value)
-
-    if(this.debug) {
-      this.debugFolder.addInput(
-        this.colors.start,
-        'value'
-      )
-      .on('change', () => {
-        this.colors.start.instance.set(this.colors.start.value)
-      })
-
-      this.debugFolder.addInput(
-        this.colors.end,
-        'value'
-      )
-      .on('change', () => {
-        this.colors.end.instance.set(this.colors.end.value)
-      })
-    }
-  }
 
   setGeometry()
   {
@@ -71,8 +41,8 @@ export default class EventHorizon {
       fragmentShader: fragment,
       uniforms: {
         uTime: { value: 0 },
-        uColorStart: { value: this.colors.start.instance },
-        uColorEnd: { value: this.colors.end.instance }
+        uColorStart: { value: this.colors.b.instance },
+        uColorEnd: { value: this.colors.c.instance }
       }
     })
   }
