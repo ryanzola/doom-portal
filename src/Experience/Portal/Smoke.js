@@ -11,11 +11,11 @@ export default class Smoke {
     this.colors = _options.colors
     this.debug = _options.debugFolder
 
-    if(this.debug) {
-      this.debugFolder = this.debug.addFolder({
-        title: 'smoke'
-      })
-    }
+    // if(this.debug) {
+    //   this.debugFolder = this.debug.addFolder({
+    //     title: 'smoke'
+    //   })
+    // }
 
     this.count = 40;
     this.group = new THREE.Group()
@@ -61,6 +61,7 @@ export default class Smoke {
 
       // mesh
       item.mesh = new THREE.Mesh(this.geometry, item.material)
+      item.mesh.position.z = i * 0.0001
 
       // save
       this.group.add(item.mesh)

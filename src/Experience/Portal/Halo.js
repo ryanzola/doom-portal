@@ -11,7 +11,7 @@ export default class Halo {
     this.time = this.experience.time
     this.colors = _options.colors
 
-    this.debug = _options.debugFolder
+    // this.debug = _options.debugFolder
 
     this.setGeometry()
     this.setMaterial()

@@ -1,5 +1,6 @@
 import * as THREE from 'three'
 import Experience from './Experience'
+import Environment from './Environment'
 import Portal from './Portal/Portal.js'
 
 export default class World
@@ -16,6 +17,7 @@ export default class World
             if(_group.name === 'base')
             {
                 this.setPortals()
+                this.setEnvironment()
             }
         })
     }
@@ -29,7 +31,7 @@ export default class World
                 c: '#ff661e',
             }
         })
-        this.portalA.group.position.z = - 1.5
+        this.portalA.group.position.z = - 2
 
         this.portalB = new Portal({
             colors:
@@ -39,7 +41,11 @@ export default class World
                 c: '#279fff',
             }
         })
-        this.portalB.group.position.z = 1.5
+        this.portalB.group.position.z = 2
+    }
+
+    setEnvironment() {
+        this.environment = new Environment()
     }
 
     resize()

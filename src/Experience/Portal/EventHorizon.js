@@ -12,12 +12,12 @@ export default class EventHorizon {
     this.colors = _options.colors
     this.debug = _options.debugFolder
 
-    if(this.debug)
-    {
-      this.debugFolder = this.debug.addFolder({
-        title: 'event horizon'
-      })
-    }
+    // if(this.debug)
+    // {
+    //   this.debugFolder = this.debug.addFolder({
+    //     title: 'event horizon'
+    //   })
+    // }
 
     this.setGeometry()
     this.setMaterial()
