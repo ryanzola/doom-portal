@@ -29,6 +29,7 @@ export default class Portal {
     this.setHalo()
     this.setEventHorizon()
     this.setSmoke()
+    this.setBacking()
   }
 
   setColors() {
@@ -78,6 +79,18 @@ export default class Portal {
   setSmoke() {
     this.smoke = new Smoke({ debugFolder: this.debugFolder, colors: this.colors })
     this.group.add(this.smoke.group)
+  }
+
+  setBacking() {
+    const circleMaterial = new THREE.MeshBasicMaterial({ color: 0x000000 })
+
+    this.circle = {} 
+    this.circle.geometry = new THREE.CircleGeometry(1, 32)
+
+    this.circle.mesh = new THREE.Mesh(this.circle.geometry, circleMaterial)
+    this.circle.mesh.position.z = -0.001
+
+    this.group.add(this.circle.mesh)
   }
 
   update() {

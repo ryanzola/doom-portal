@@ -39,7 +39,8 @@ export default class Environment {
     this.lights.items.b = {}
     this.lights.items.b.color = '#0059ff'
     this.lights.items.b.instance = new THREE.RectAreaLight(this.lights.items.b.color, 10, 1.03 , 2)
-    this.lights.items.b.instance.position.z = 2.001
+    this.lights.items.b.instance.position.x = - 2
+    this.lights.items.b.instance.rotation.y = - Math.PI * 0.5
 
     if(this.debug) {
       const lightsFolder = this.debugFolder.addFolder({

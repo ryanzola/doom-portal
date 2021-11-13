@@ -15,8 +15,8 @@ export default class Floor {
   }
 
   setGeometry() {
-    this.geometry = new THREE.PlaneGeometry(20, 20, 1, 1)
-    this.geometry.rotateX(- Math.PI * 0.5)
+    this.geometry = new THREE.BoxGeometry(4.025, 3, 4.025)
+    // this.geometry.rotateX(- Math.PI * 0.5)
 
     this.geometry.setAttribute('uv2', this.geometry.attributes.uv)
   }
@@ -27,24 +27,26 @@ export default class Floor {
     this.textures.color.encoding = THREE.sRGBEncoding
     this.textures.color.wrapS = THREE.RepeatWrapping
     this.textures.color.wrapT = THREE.RepeatWrapping
-    this.textures.color.repeat.set(6, 3)
+    this.textures.color.repeat.set(2, 1)
 
     this.textures.normal = this.experience.resources.items.metalNormalTexture
     this.textures.normal.wrapS = THREE.RepeatWrapping
     this.textures.normal.wrapT = THREE.RepeatWrapping
-    this.textures.normal.repeat.set(6, 3) 
+    this.textures.normal.repeat.set(2, 1) 
   }
 
   setMaterial() {
     this.material = new THREE.MeshStandardMaterial ({
       map: this.textures.color,
-      normalMap: this.textures.normal
+      normalMap: this.textures.normal,
+      side: THREE.BackSide
     })
   }
 
   setMesh() {
     this.mesh = new THREE.Mesh(this.geometry, this.material)
-    this.mesh.position.y = -0.95
+    // this.mesh.position.y = -0.95
+    this.mesh.position.y = 0.55
 
     this.scene.add(this.mesh)
   }

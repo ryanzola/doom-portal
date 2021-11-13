@@ -41,7 +41,9 @@ export default class World
                 c: '#279fff',
             }
         })
-        this.portalB.group.position.z = 2
+        // this.portalB.group.position.z = 2
+        this.portalB.group.position.x = -2
+        this.portalB.group.rotateOnAxis(new THREE.Vector3(0, 1, 0), Math.PI * 0.5)
     }
 
     setEnvironment() {
